@@ -14,21 +14,52 @@ const EXTENSIONS = ["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"];
 function imageCandidates(product){
   if(product.folder){
     const list=[];
-    for(let n=1;n<=12;n++){
-      for(const ext of EXTENSIONS) list.push(`${product.folder}/${n}.${ext}`);
-    }
+    for(let n=1;n<=12;n++) for(const ext of EXTENSIONS) list.push(`${product.folder}/${n}.${ext}`);
     return list;
   }
   return product.image ? [product.image] : [];
 }
 
+function githubRepo(){
+  const host=location.hostname;
+  const parts=location.pathname.split('/').filter(Boolean);
+  if(host.endsWith('.github.io')){
+    const owner=host.split('.')[0];
+    const repo=parts[0] || '';
+    if(owner && repo) return {owner,repo};
+  }
+  return null;
+}
+
+async function githubFolderImages(folder){
+  const repo=githubRepo();
+  if(!repo) return [];
+  const url=`https://api.github.com/repos/${encodeURIComponent(repo.owner)}/${encodeURIComponent(repo.repo)}/contents/${folder}`;
+  try{
+    const r=await fetch(url,{headers:{Accept:'application/vnd.github+json'}});
+    if(!r.ok) return [];
+    const files=await r.json();
+    return files.filter(f=>f.type==='file' && /\\.(jpe?g|png|webp)$/i.test(f.name))
+      .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}))
+      .map(f=>f.download_url || f.html_url);
+  }catch(e){ return []; }
+}
+
 function probeImages(candidates){
-  return Promise.all(candidates.map(src => new Promise(resolve=>{
+  return Promise.all(candidates.map(src=>new Promise(resolve=>{
     const img=new Image();
     img.onload=()=>resolve(src);
     img.onerror=()=>resolve(null);
-    img.src=src+"?v="+Date.now();
+    img.src=src;
   }))).then(x=>x.filter(Boolean));
+}
+
+async function getImages(product){
+  // On GitHub Pages, read the actual contents of each folder.
+  const githubImages=await githubFolderImages(product.folder);
+  if(githubImages.length) return githubImages;
+  // When opened locally, keep the simple 1.jpg ... 12.webp fallback.
+  return probeImages(imageCandidates(product));
 }
 
 async function render(){
@@ -45,7 +76,7 @@ async function render(){
     </article>`).join("");
 
   for(const p of products){
-    const found=await probeImages(imageCandidates(p));
+    const found=await getImages(p);
     const box=document.getElementById("gallery-"+p.id);
     if(!box) continue;
     if(found.length){
