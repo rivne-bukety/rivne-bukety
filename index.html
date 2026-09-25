@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Рівне букетики — подарункові букети та бокси.">
+  <title>Рівне букетики</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="leafLayer" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Рівне букетики">
+        <div class="logoBox">
+          <img id="logoImg" src="assets/logo/logo.png" alt="Логотип" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='grid';">
+          <span id="logoFallback">РБ</span>
+        </div>
+        <span>Рівне букетики</span>
+      </a>
+      <nav>
+        <a href="#portfolio">Портфоліо</a>
+        
+        <a href="#contacts">Контакти</a>
+      </nav>
+      <div class="navActions">
+        <button class="musicBtn" id="musicBtn">♫ Музика</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="heroGlow"></div>
+      <div class="container heroGrid">
+        <div>
+          <p class="eyebrow">Подарунки, які говорять замість слів</p>
+          <h1>Рівне<br><span>букетики</span></h1>
+          <p class="heroText">Авторські букети, бокси та солодкі композиції для коханих, друзів і важливих моментів.</p>
+          <div class="heroButtons">
+            <a class="primary" href="#portfolio">Дивитися портфоліо</a>
+            <a class="secondary" href="#contacts">Замовити</a>
+          </div>
+        </div>
+        <div class="heroCard">
+          <div class="flowerMark">✿</div>
+          <p>Створено<br>з любовʼю</p>
+          <small>Рівне • Україна</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <p class="eyebrow">Наші роботи</p>
+            <h2>Портфоліо</h2>
+          </div>
+          <p>Оберіть категорію та перегляньте композиції.</p>
+        </div>
+        <div id="portfolioGrid" class="portfolioGrid"></div>
+      </div>
+    </section>
+
+    <section class="about section">
+      <div class="container aboutCard">
+        <div>
+          <p class="eyebrow">Ручна робота</p>
+          <h2>Подарунок,<br>який запамʼятається</h2>
+        </div>
+        <p>Підберемо композицію під подію, настрій та бюджет. Додайте своє фото в папку потрібної категорії — і воно зʼявиться на сайті.</p>
+      </div>
+    </section>
+
+    <section class="order section">
+      <div class="container orderCard">
+        <div>
+          <p class="eyebrow">Замовлення</p>
+          <h2>Хочете букет?<br>Пишіть нам 💌</h2>
+        </div>
+        <div class="orderText">
+          <p>За замовленням та консультацією звертайтесь в <b>Instagram</b>.</p>
+          <div class="socialButtons">
+            <a class="primary" href="https://www.instagram.com/flowers_rivne_ua/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts" class="section contacts">
+      <div class="container">
+        <p class="eyebrow">Команда</p>
+        <h2>Контакти</h2>
+        <div class="contactGrid">
+          <div class="contactCard"><span>@malloy_ai</span><strong>Савчук Юрій Віталійович</strong><small>Голова комітету</small></div>
+          <div class="contactCard"><span>@soleneds</span><strong>Мартинов Богдан Миколайович</strong><small>Директор</small></div>
+          <div class="contactCard"><span>@bondanakostukovich</span><strong>Богдана Святославівна</strong><small>Керівник комітету</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footerInner">
+      <span>© <span id="year"></span> Рівне букетики</span>
+      <span class="footerSocial">
+        <a href="https://www.instagram.com/flowers_rivne_ua/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@rivne_byketiki" target="_blank" rel="noopener">TikTok</a>
+      </span>
+    </div>
+  </footer>
+  <audio id="music" loop preload="metadata">
+    <source src="assets/music/last-christmas.mp3" type="audio/mpeg">
+  </audio>
+  <input id="musicFilePicker" type="file" accept=".mp3,audio/mpeg,audio/*" hidden>
+
+  <script src="settings.js"></script>
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
